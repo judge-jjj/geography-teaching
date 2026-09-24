@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FrontScope · 省丹中锋面气象模拟器</title>
+  <style>
+    :root{--bg:#071018;--panel:#0c1822;--panel-2:#10212c;--line:#233946;--text:#e8f2f2;--muted:#8fa6aa;--cyan:#63d7e7;--blue:#2e9bce;--warm:#ff9d58;--yellow:#f4ca69;--green:#93d2a4;--danger:#ff7e78;}
+    *{box-sizing:border-box} html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:"Segoe UI","Microsoft YaHei",system-ui,sans-serif;font-size:14px}
+    body{overflow-x:hidden}.app{max-width:1660px;margin:0 auto;padding:0 22px 24px}.topbar{height:84px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;border-bottom:1px solid #1b303a;margin-bottom:14px}.brand{display:flex;gap:12px;align-items:center}.brand-mark{width:36px;height:36px;border:1px solid #3a6371;background:linear-gradient(135deg,#163342,#0d1b23);display:grid;place-items:center;position:relative}.brand-mark:before,.brand-mark:after{content:"";position:absolute;background:var(--cyan)}.brand-mark:before{width:18px;height:2px;transform:rotate(-35deg)}.brand-mark:after{width:2px;height:18px;transform:rotate(-35deg)}h1{font-size:18px;letter-spacing:.02em;margin:0;font-weight:650}.sub{color:var(--muted);font-size:12px;margin-top:2px}.top-nav{display:flex;align-items:center;gap:4px;border:1px solid #203b46;background:#0a1820;border-radius:24px;padding:4px}.top-nav button,.top-actions button{border:0;background:transparent;color:#93a9ad;padding:9px 15px;font:inherit;font-size:12px;cursor:pointer;border-radius:18px}.top-nav button.active{background:#17323b;color:#e8f2f2;box-shadow:inset 0 0 0 1px #355966}.top-actions{justify-self:end;display:flex;align-items:center;gap:4px}.top-actions button{padding:8px 9px;border:1px solid transparent}.top-actions button:hover{border-color:#31515d;color:var(--text)}.top-actions .note-link{padding-right:14px;border-right:1px solid #2b4147;border-radius:0}.meta{display:none}.live-dot{width:7px;height:7px;background:#7de7a0;border-radius:50%;box-shadow:0 0 8px #62d58b}.content-grid{display:grid;grid-template-columns:235px minmax(0,1fr);gap:14px}.side-nav{height:520px;border:1px solid var(--line);background:linear-gradient(180deg,#0e202a,#0b1720);padding:17px 12px;overflow:auto}.side-head{display:flex;justify-content:space-between;align-items:center;margin:0 5px 14px}.side-head h2{font-size:15px;margin:0}.side-count{font-size:10px;color:#769398;letter-spacing:.12em}.nav-group-title{font-size:11px;color:#799298;letter-spacing:.03em;padding:8px 8px}.chapter-list{display:grid;gap:5px}.chapter{display:flex;align-items:center;gap:10px;border:1px solid transparent;border-radius:8px;color:#91a8ad;padding:10px 8px;font-size:12px;cursor:pointer;text-align:left;background:transparent}.chapter:hover{background:#122a34;color:#d4e5e6}.chapter.active{border-color:#2b4e59;background:#18313a;color:#e5f4f3}.chapter .chapter-icon{width:23px;text-align:center;color:#74a4ad;font-size:16px}.chapter .chapter-no{margin-left:auto;color:#68858d;font-size:10px}.lesson-card{border:1px solid #25434e;background:#10252e;border-radius:7px;margin:16px 5px 0;padding:12px;color:#9eb6b9;font-size:11px;line-height:1.55}.lesson-card strong{display:block;color:#d5e7e6;font-size:12px;margin-bottom:7px}.lesson-card p{margin:5px 0}.lesson-card p:before{content:'•';color:var(--cyan);margin-right:6px}.upper-grid{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:12px}.right-rail{display:flex;flex-direction:column;gap:12px;min-width:0;max-height:520px;overflow-y:auto;scrollbar-color:#31515d transparent;scrollbar-width:thin}.right-rail .panel{min-height:0}.dashboard{display:block;margin-top:12px}.panel{background:var(--panel);border:1px solid var(--line);padding:17px 18px;min-height:255px}.panel-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:15px}.panel h2{font-size:14px;margin:0;font-weight:650;letter-spacing:.02em}.eyebrow{font-size:11px;color:var(--muted);letter-spacing:.04em}.station-select{background:#12252f;color:var(--text);border:1px solid #2a4853;padding:7px 25px 7px 9px;min-width:116px;font:inherit;font-size:12px}.station-badge{border:1px solid #355564;color:#98c7d1;padding:5px 8px;font-size:11px}.station-note{color:#768f96;font-size:11px;margin:-7px 0 14px}.metric-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px 15px}.metric{border-top:1px solid #1d3440;padding-top:10px}.metric-label{color:var(--muted);font-size:11px;margin-bottom:4px}.metric-value{font-size:21px;font-weight:600;letter-spacing:.01em}.metric-value small{font-size:12px;color:var(--muted);font-weight:400}.metric-sub{font-size:11px;color:#a5b8bb;margin-top:3px}.weather-line{display:flex;align-items:center;gap:6px;color:#f6cf76;font-size:12px}.weather-icon{font-size:15px}.chart-panel{min-height:235px}.chart-wrap{height:181px;position:relative}.chart-wrap canvas{width:100%;height:100%;display:block}.chart-legend{display:flex;gap:16px;position:absolute;top:2px;right:0;font-size:11px;color:var(--muted);pointer-events:none}.line-sample{display:inline-block;width:20px;height:0;border-top:2px solid var(--warm);vertical-align:middle;margin-right:5px}.line-sample.pressure{border-top:2px dashed var(--cyan)}.chart-help{color:#768f96;font-size:11px;margin-top:4px}.controls-panel{min-height:255px}.reset{border:1px solid #31525d;background:#10232c;color:#a9c3c7;padding:6px 10px;font:inherit;font-size:11px;cursor:pointer}.reset:hover{border-color:var(--cyan);color:var(--text)}.control{margin:12px 0 16px}.control-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}.control-label{font-size:12px;color:#c7d6d7;display:flex;align-items:center;gap:6px}.hint{display:inline-grid;place-items:center;width:15px;height:15px;border:1px solid #52717a;border-radius:50%;color:#99b4b9;font-size:10px;cursor:help}.control-value{color:var(--cyan);font-variant-numeric:tabular-nums;font-size:12px}.range{appearance:none;width:100%;height:4px;background:#203640;outline:none}.range::-webkit-slider-thumb{appearance:none;width:15px;height:15px;border-radius:50%;background:var(--cyan);border:2px solid #0c1822;box-shadow:0 0 0 1px var(--cyan);cursor:pointer}.range.warm-range::-webkit-slider-thumb{background:var(--warm);box-shadow:0 0 0 1px var(--warm)}.range::-moz-range-thumb{width:13px;height:13px;border-radius:50%;background:var(--cyan);border:2px solid #0c1822;cursor:pointer}.footer-strip{display:flex;justify-content:space-between;align-items:center;margin-top:12px;color:#668087;font-size:11px}.footer-strip span{color:#8ea6aa}.pill{border:1px solid #294550;padding:5px 9px}.tooltip{position:relative}.tooltip:hover:after{content:attr(data-tip);position:absolute;bottom:23px;left:-4px;background:#142a34;border:1px solid #38606b;padding:5px 7px;width:170px;color:#b5c8cb;font-size:10px;z-index:8;line-height:1.4}.mobile-label{display:none}
+    .upper-grid{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:12px}.right-rail{display:flex;flex-direction:column;gap:12px;min-width:0;max-height:520px;overflow-y:auto;scrollbar-color:#31515d transparent;scrollbar-width:thin}.right-rail .panel{min-height:0}.dashboard{display:block;margin-top:12px}.panel{background:var(--panel);border:1px solid var(--line);padding:17px 18px;min-height:255px}.panel-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:15px}.panel h2{font-size:14px;margin:0;font-weight:650;letter-spacing:.02em}.eyebrow{font-size:11px;color:var(--muted);letter-spacing:.04em}.station-select{background:#12252f;color:var(--text);border:1px solid #2a4853;padding:7px 25px 7px 9px;min-width:116px;font:inherit;font-size:12px}.station-badge{border:1px solid #355564;color:#98c7d1;padding:5px 8px;font-size:11px}.station-note{color:#768f96;font-size:11px;margin:-7px 0 14px}.metric-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px 15px}.metric{border-top:1px solid #1d3440;padding-top:10px}.metric-label{color:var(--muted);font-size:11px;margin-bottom:4px}.metric-value{font-size:21px;font-weight:600;letter-spacing:.01em}.metric-value small{font-size:12px;color:var(--muted);font-weight:400}.metric-sub{font-size:11px;color:#a5b8bb;margin-top:3px}.weather-line{display:flex;align-items:center;gap:6px;color:#f6cf76;font-size:12px}.weather-icon{font-size:15px}.chart-panel{min-height:235px}.chart-wrap{height:181px;position:relative}.chart-wrap canvas{width:100%;height:100%;display:block}.chart-legend{display:flex;gap:16px;position:absolute;top:2px;right:0;font-size:11px;color:var(--muted);pointer-events:none}.line-sample{display:inline-block;width:20px;height:0;border-top:2px solid var(--warm);vertical-align:middle;margin-right:5px}.line-sample.pressure{border-top:2px dashed var(--cyan)}.chart-help{color:#768f96;font-size:11px;margin-top:4px}.controls-panel{min-height:255px}.reset{border:1px solid #31525d;background:#10232c;color:#a9c3c7;padding:6px 10px;font:inherit;font-size:11px;cursor:pointer}.reset:hover{border-color:var(--cyan);color:var(--text)}.control{margin:12px 0 16px}.control-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}.control-label{font-size:12px;color:#c7d6d7;display:flex;align-items:center;gap:6px}.hint{display:inline-grid;place-items:center;width:15px;height:15px;border:1px solid #52717a;border-radius:50%;color:#99b4b9;font-size:10px;cursor:help}.control-value{color:var(--cyan);font-variant-numeric:tabular-nums;font-size:12px}.range{appearance:none;width:100%;height:4px;background:#203640;outline:none}.range::-webkit-slider-thumb{appearance:none;width:15px;height:15px;border-radius:50%;background:var(--cyan);border:2px solid #0c1822;box-shadow:0 0 0 1px var(--cyan);cursor:pointer}.range.warm-range::-webkit-slider-thumb{background:var(--warm);box-shadow:0 0 0 1px var(--warm)}.range::-moz-range-thumb{width:13px;height:13px;border-radius:50%;background:var(--cyan);border:2px solid #0c1822;cursor:pointer}.footer-strip{display:flex;justify-content:space-between;align-items:center;margin-top:12px;color:#668087;font-size:11px}.footer-strip span{color:#8ea6aa}.pill{border:1px solid #294550;padding:5px 9px}.tooltip{position:relative}.tooltip:hover:after{content:attr(data-tip);position:absolute;bottom:23px;left:-4px;background:#142a34;border:1px solid #38606b;padding:5px 7px;width:170px;color:#b5c8cb;font-size:10px;z-index:8;line-height:1.4}.mobile-label{display:none}
+    .scene-title{display:flex;flex-direction:column;gap:6px}.scene-title .eyebrow{color:#80aeb4;font-size:10px;letter-spacing:.16em}.scene-title strong{font-family:Georgia,"Microsoft YaHei",serif;font-size:32px;line-height:1.05;font-weight:500}.scene-title small{color:#9ab2b6;font-size:12px;font-weight:400}.timeline{display:grid;grid-template-columns:64px 180px minmax(0,1fr) 280px;gap:16px;align-items:center;margin-top:14px;padding:15px 18px;border:1px solid var(--line);background:#0d2029;border-radius:8px;min-height:100px}.play-btn{width:44px;height:44px;border-radius:50%;border:1px solid #4b797b;background:#173c3c;color:#dff6e7;font-size:17px;cursor:pointer;box-shadow:0 0 0 5px #153039}.timeline-meta{display:flex;flex-direction:column;gap:6px;border-right:1px solid #29424a;padding-right:14px}.timeline-meta b{font-size:13px;color:#cfe0df;font-weight:500}.timeline-meta span{color:#6f8b91;font-size:10px;line-height:1.4}.timeline-main{min-width:0}.timeline-title{font-size:11px;color:#a7c0c2;margin-bottom:7px}.timeline-track{position:relative;height:15px;display:flex;align-items:center}.timeline-track:before{content:"";position:absolute;left:0;right:0;height:4px;background:#294956;border-radius:5px}.timeline-fill{position:absolute;left:0;height:4px;background:linear-gradient(90deg,#3aacc9,#8ce1e2);border-radius:5px;width:52%;pointer-events:none}.timeline-track input{position:relative;width:100%;height:18px;margin:0;appearance:none;background:transparent;cursor:pointer}.timeline-track input::-webkit-slider-thumb{appearance:none;width:16px;height:16px;border:2px solid #c3e4df;background:#b8e5d3;border-radius:50%;box-shadow:0 0 0 3px #21464e}.timeline-track input::-moz-range-thumb{width:12px;height:12px;border:2px solid #c3e4df;background:#b8e5d3;border-radius:50%;box-shadow:0 0 0 3px #21464e}.timeline-labels{display:flex;justify-content:space-between;color:#78969b;font-size:10px;margin-top:7px}.timeline-labels span:nth-child(3){color:#c4e8e8}.timeline-cards{display:flex;gap:7px;height:56px}.timeline-cards div{min-width:67px;border:1px solid #294650;border-radius:7px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;color:#83a6aa;font-size:17px}.timeline-cards span{font-size:10px}.timeline-cards .selected{background:#18343c;border-color:#4f7e82;color:#c6e6df}.timeline-cards .selected span{color:#c6e6df}
+    @media(max-width:1250px){.content-grid{grid-template-columns:200px minmax(0,1fr)}.timeline{grid-template-columns:56px 160px minmax(0,1fr) 230px}.timeline-cards div{min-width:55px}}@media(max-width:1100px){.upper-grid{grid-template-columns:minmax(0,1fr) 300px}.scene-card{height:460px}.top-actions .note-link{display:none}}@media(max-width:900px){.topbar{grid-template-columns:1fr auto}.top-nav{display:none}.content-grid{grid-template-columns:1fr}.side-nav{height:auto;max-height:none}.chapter-list{grid-template-columns:repeat(5,1fr)}.lesson-card{display:none}.side-head{margin-bottom:7px}.nav-group-title{display:none}.chapter{justify-content:center;flex-direction:column;gap:4px;padding:8px}.chapter .chapter-no{display:none}.timeline{grid-template-columns:56px 1fr}.timeline-cards{display:none}}@media(max-width:820px){.upper-grid{display:block}.right-rail{display:grid;grid-template-columns:1fr 1fr;margin-top:12px;max-height:none}.scene-card{height:460px}}@media(max-width:700px){.app{padding:0 12px 22px}.topbar{height:72px;align-items:center}.brand h1{font-size:15px}.brand .sub{font-size:10px}.top-actions button{padding:7px 5px}.content-grid{gap:10px}.chapter-list{grid-template-columns:repeat(5,1fr)}.scene-card{height:410px}.scene-header{display:block}.scene-legend{margin-top:12px;gap:8px;font-size:10px}.mode-switch{top:78px;right:12px}.right-rail{display:block}.right-rail .panel{margin-bottom:12px}.panel{min-height:auto}.chart-wrap{height:200px}.timeline{grid-template-columns:45px 1fr;gap:10px;padding:12px}.play-btn{width:36px;height:36px}.timeline-meta{display:none}.footer-strip{gap:10px;align-items:flex-start;flex-direction:column}.scene-readout{display:none}}
+    /* 大屏课堂布局：放宽页面最大宽度，让中央三维场景占满工作区。 */
+    .app{max-width:none;width:100%;padding-left:18px;padding-right:18px}
+    .content-grid{grid-template-columns:205px minmax(0,1fr);gap:12px}
+    .upper-grid{grid-template-columns:minmax(0,1fr) 320px;gap:12px}
+    .scene-card,.side-nav{height:650px}
+    .right-rail{max-height:650px}
+    @media(max-width:1450px){.content-grid{grid-template-columns:185px minmax(0,1fr)}.upper-grid{grid-template-columns:minmax(0,1fr) 300px}.scene-card,.side-nav{height:600px}.right-rail{max-height:600px}}
+  </style>
+</head>
+<body>
+<main class="app">
+  <header class="topbar">
+    <div class="brand"><div class="brand-mark" aria-hidden="true"></div><div><h1>FRONTSCOPE / 锋面气象模拟器</h1><div class="sub">高中地理 · 冷锋过境省丹中 · 概念性课堂演示</div></div></div>
+    <nav class="top-nav" aria-label="视图切换"><button class="active">◉ 轨迹</button><button>▦ 章节</button><button>▱ 俯视图</button></nav>
+    <div class="top-actions"><button class="note-link">▤ 现场笔记</button><button title="中文界面">中</button><button title="帮助">?</button><button title="声音">◖</button><button title="截图">▣</button><button title="全屏">⛶</button></div>
+  </header>
+
+  <section class="content-grid">
+  <aside class="side-nav" aria-label="探索章节">
+    <div class="side-head"><h2>探索章节</h2><span class="side-count">01 — 08</span></div>
+    <div class="nav-group-title">气团与锋面</div>
+    <div class="chapter-list">
+      <button class="chapter active" data-theme="cold"><span class="chapter-icon">▽</span><span>冷暖锋系统</span><span class="chapter-no">01</span></button>
+      <button class="chapter" data-theme="stationary"><span class="chapter-icon">⌒</span><span>准静止锋</span><span class="chapter-no">02</span></button>
+      <button class="chapter" data-theme="cyclone"><span class="chapter-icon">◉</span><span>锋面气旋</span><span class="chapter-no">03</span></button>
+      <button class="chapter" data-theme="thermal"><span class="chapter-icon">↕</span><span>热力环流</span><span class="chapter-no">04</span></button>
+      <button class="chapter" data-theme="seaLand"><span class="chapter-icon">⇄</span><span>海陆风</span><span class="chapter-no">05</span></button>
+      <button class="chapter" data-theme="valley"><span class="chapter-icon">⌃</span><span>山谷风</span><span class="chapter-no">06</span></button>
+      <button class="chapter" data-theme="waterCycle"><span class="chapter-icon">♒</span><span>水循环</span><span class="chapter-no">07</span></button>
+      <button class="chapter" data-theme="threeCells"><span class="chapter-icon">◎</span><span>三圈环流</span><span class="chapter-no">08</span></button>
+    </div>
+    <div class="lesson-card" id="lessonCard"><strong>当前课题 · 冷暖锋系统</strong><p>冷空气向前推进，暖空气被迫抬升。</p><p>锋面附近常出现阵雨或雷电。</p><p>过境后气温下降、气压升高。</p></div>
+  </aside>
+  <section class="upper-grid">
+  <div class="scene-card" aria-label="三维锋面气象场景">
+    <canvas id="scene"></canvas>
+    <div class="scene-header"><div class="scene-title"><span class="eyebrow" id="sceneEyebrow">主题 01 · 三维演示</span><strong>冷锋</strong><small>冷空气前进，暖空气抬升。</small></div><div class="scene-legend"><span class="legend-item"><i class="legend-swatch warm"></i>暖气团</span><span class="legend-item"><i class="legend-swatch cold"></i>冷气团</span><span class="legend-item"><i class="legend-swatch rain"></i>降雨粒子</span></div></div>
+    <div class="mode-switch" id="modeSwitch" role="group" aria-label="锋面类型"><button id="coldBtn" class="active">冷锋</button><button id="warmBtn">暖锋</button></div>
+    <div class="scene-note">拖动旋转 · 滚轮缩放 · 粒子密度随地表湿度变化</div>
+    <div class="scene-readout"><span>锋面推进 <b id="frontReadout">40 km/h</b></span><span>过境进度 <b id="progressReadout">52%</b></span></div>
+  </div>
+  <aside class="right-rail" aria-label="实时读数和实验参数">
+    <article class="panel station-panel">
+      <div class="panel-head"><h2>站点读数</h2><select class="station-select" aria-label="站点选择"><option>省丹中</option></select></div>
+      <div class="station-note">概念性产出 · 未测量</div>
+      <div class="metric-grid">
+        <div class="metric"><div class="metric-label">温度</div><div class="metric-value" id="tempValue">20.5 <small>℃</small></div><div class="metric-sub" id="tempSub">锋前暖气团</div></div>
+        <div class="metric"><div class="metric-label">压力</div><div class="metric-value" id="pressureValue">1009 <small>hPa</small></div><div class="metric-sub" id="pressureSub">基准海平面</div></div>
+        <div class="metric"><div class="metric-label">风</div><div class="metric-value" id="windValue">W <small>/ 9.3 m/s</small></div><div class="metric-sub" id="windSub">暖气团向东输送</div></div>
+        <div class="metric"><div class="metric-label">天气</div><div class="weather-line"><span class="weather-icon" id="weatherIcon">☁</span><span id="weatherValue">阵雨 · 雷电</span></div><div class="metric-sub">锋面附近强对流</div></div>
+      </div>
+    </article>
+    <article class="panel controls-panel">
+      <div class="panel-head"><div><h2>实验对照</h2><div class="eyebrow" style="margin-top:4px">改变一个条件，注意反应。</div></div><button class="reset" id="resetBtn">↺ 重置</button></div>
+      <div class="control"><div class="control-top"><label class="control-label" for="tempRange">冷暖气团温差 <span class="hint tooltip" data-tip="温差越大，锋面附近抬升与降温越明显。">?</span></label><output class="control-value" id="tempRangeValue">16 ℃</output></div><input class="range warm-range" id="tempRange" type="range" min="6" max="24" step="1" value="16"></div>
+      <div class="control"><div class="control-top"><label class="control-label" for="speedRange">锋面移动速度 <span class="hint tooltip" data-tip="速度决定过境过程的时间尺度。">?</span></label><output class="control-value" id="speedRangeValue">40 km/h</output></div><input class="range" id="speedRange" type="range" min="10" max="80" step="1" value="40"></div>
+      <div class="control"><div class="control-top"><label class="control-label" for="humidityRange">地表湿度 <span class="hint tooltip" data-tip="湿度高时，云量与降雨粒子会增加。">?</span></label><output class="control-value" id="humidityRangeValue">78 %</output></div><input class="range" id="humidityRange" type="range" min="20" max="100" step="1" value="78"></div>
+      <div class="control"><div class="control-top"><label class="control-label" for="instabilityRange">对流不稳定度 <span class="hint tooltip" data-tip="不稳定度高时，垂直对流和雷暴更活跃。">?</span></label><output class="control-value" id="instabilityRangeValue">76 %</output></div><input class="range" id="instabilityRange" type="range" min="10" max="100" step="1" value="76"></div>
+    </article>
+  </aside>
+  </section>
+  </section>
+
+  <section class="dashboard">
+    <article class="panel chart-panel">
+      <div class="panel-head"><h2>时序曲线</h2><span class="eyebrow">省丹中 · 未来 6 小时</span></div>
+      <div class="chart-wrap"><canvas id="chart"></canvas><div class="chart-legend"><span><i class="line-sample"></i>温度</span><span><i class="line-sample pressure"></i>气压</span></div></div>
+      <div class="chart-help">拖动图表查看一个瞬间。竖虚线表示锋面过境时刻。</div>
+    </article>
+  </section>
+  <section class="timeline" aria-label="动态天气时间轴">
+    <button class="play-btn" id="playBtn" title="播放/暂停">▶</button>
+    <div class="timeline-meta"><b id="timelineTime">T − 0.1 h</b><span>相对省丹中过境时刻</span></div>
+    <div class="timeline-main"><div class="timeline-title">动态天气</div><div class="timeline-track"><span class="timeline-fill" id="timelineFill"></span><input id="timelineRange" type="range" min="0" max="100" value="52" aria-label="过境进度"></div><div class="timeline-labels"><span>暖气团</span><span>接近</span><span>过境</span><span>冷气团</span><span>过境后</span></div></div>
+    <div class="timeline-cards"><div>◉<span>气压</span></div><div>♨<span>温度</span></div><div class="selected">≋<span>气流</span></div></div>
+  </section>
+  <div class="footer-strip"><span>模型说明：数据为教学演示参数，不代表实测预报。</span><span>锋面气象课堂 · 省丹中站点</span></div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+<script>
+(() => {
+  'use strict';
+  // ------------------------------
+  // 1. 全局状态：所有滑块和锋面模式共享这组参数。
+  // ------------------------------
+  const state = { theme:'cold', mode:'cold', tempDiff:16, speed:40, humidity:78, instability:76, progress:.52, draggingChart:false };
+  const defaults = {...state};
+  const $ = id => document.getElementById(id);
+
+  // ------------------------------
+  // 2. Three.js 场景初始化。采用低多边形几何体，保证课堂投屏流畅。
+  // ------------------------------
+  const canvas = $('scene');
+  const renderer = new THREE.WebGLRenderer({canvas, antialias:true, alpha:false});
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 2)); renderer.setClearColor(0x08141d, 1);
+  const scene = new THREE.Scene(); scene.fog = new THREE.Fog(0x08141d, 38, 92);
+  const camera = new THREE.PerspectiveCamera(39, 1, .1, 180); camera.position.set(27, 25, 31);
+  const ambient = new THREE.HemisphereLight(0x9bdce9, 0x061018, 1.55); scene.add(ambient);
+  const sun = new THREE.DirectionalLight(0xffd7a2, 2.2); sun.position.set(-18,34,20); scene.add(sun);
+  const world = new THREE.Group(); scene.add(world);
+  // 主题专属图层：切换左侧主题时只重建这一层，基础地形和相机保持不变。
+  const themeGroup = new THREE.Group(); world.add(themeGroup);
+  const themeInfo = {
+    cold:{title:'冷暖锋系统',desc:'冷空气前进，暖空气抬升。',lesson:['冷空气向前推进，暖空气被迫抬升。','锋面附近常出现阵雨或雷电。','过境后气温下降、气压升高。']},
+    stationary:{title:'准静止锋',desc:'冷暖气流对峙，阴雨云带持续。',lesson:['冷暖气流势力相当，锋面移动缓慢。','云系沿锋面排列，形成持续性降雨。','常见于梅雨锋等天气过程。']},
+    cyclone:{title:'锋面气旋',desc:'北半球低压气旋，冷暖锋围绕低压旋转。',lesson:['中心气压较低，近地面气流逆时针辐合。','冷锋与暖锋从低压中心向外延伸。','锋面两侧气温、风向和天气差异明显。']},
+    thermal:{title:'热力环流',desc:'地面冷热不均，引起垂直和水平气流运动。',lesson:['受热地面附近空气上升，形成低压。','冷却区域空气下沉，形成高压。','闭合环流把热量和水汽重新分配。']},
+    seaLand:{title:'海陆风',desc:'白天吹海风，夜晚吹陆风。',lesson:['白天陆地升温快，海洋相对较冷，海风吹向陆地。','夜晚陆地降温快，风向转为由陆地吹向海洋。','海陆风影响沿海城市的气温和湿度。']},
+    valley:{title:'山谷风',desc:'白天谷风上山，夜晚山风下谷。',lesson:['白天山坡受热，空气沿坡上升，形成谷风。','夜晚山坡辐射降温，冷空气沿坡下沉。','山谷地形会引导近地面气流。']},
+    waterCycle:{title:'水循环',desc:'蒸发、水汽输送、降水与径流相互联系。',lesson:['太阳辐射驱动海洋和陆地水面蒸发。','水汽在空中输送并凝结成云。','降水通过地表径流和地下径流回到水体。']},
+    threeCells:{title:'三圈环流',desc:'低纬、中纬、高纬环流圈与气压带风带。',lesson:['赤道附近上升，副热带附近下沉。','中纬度为西风带，高纬度为极地东风带。','三圈环流共同构成全球大气环流。']}
+  };
+
+  function fitRenderer(){ const r = canvas.getBoundingClientRect(); renderer.setSize(r.width, r.height, false); camera.aspect=r.width/r.height; camera.updateProjectionMatrix(); }
+  window.addEventListener('resize', fitRenderer); fitRenderer();
+
+  // 地面、水体、道路与山体。
+  const ground = new THREE.Mesh(new THREE.PlaneGeometry(70,52,1,1), new THREE.MeshStandardMaterial({color:0x142a2a,roughness:1})); ground.rotation.x=-Math.PI/2; ground.position.y=-.2; world.add(ground);
+  // 投屏用网格地面：帮助学生判断气流方向、地形位置与空间尺度。
+  const floorGrid=new THREE.GridHelper(82, 24, 0x2b4a52, 0x17323d); floorGrid.position.y=-.15; floorGrid.material.transparent=true; floorGrid.material.opacity=.42; world.add(floorGrid);
+  // 低多边形地形台：三层颜色模拟剖面土层，增加模型的立体厚度。
+  const soilLayers=[{y:-1.05,h:.42,c:0x3b2825},{y:-.72,h:.28,c:0x6a4635},{y:-.48,h:.18,c:0x8a6b49}];
+  soilLayers.forEach(layer=>{const soil=new THREE.Mesh(new THREE.BoxGeometry(48,layer.h,28),new THREE.MeshStandardMaterial({color:layer.c,roughness:1,flatShading:true}));soil.position.set(0,layer.y,1);world.add(soil)});
+  const water = new THREE.Mesh(new THREE.CircleGeometry(10,9), new THREE.MeshStandardMaterial({color:0x16465a,roughness:.7,transparent:true,opacity:.9})); water.rotation.x=-Math.PI/2; water.position.set(15,.02,6); water.scale.set(1.25,.75,1); world.add(water);
+  const roadMat = new THREE.MeshBasicMaterial({color:0x526168,transparent:true,opacity:.48});
+  [[0,.04,0,1,0.07,22],[0,.045,0,25,.07,1],[11,.05,-7,1,.07,16]].forEach(([x,y,z,sx,sy,sz])=>{const r=new THREE.Mesh(new THREE.BoxGeometry(1,1,1),roadMat);r.position.set(x,y,z);r.scale.set(sx,sy,sz);world.add(r)});
+  const mountainMat = new THREE.MeshStandardMaterial({color:0x2d4b4b,flatShading:true,roughness:1}); const snowMat = new THREE.MeshStandardMaterial({color:0xb4c8c1,flatShading:true});
+  [[-22,0,-5,9,12],[-14,0,-14,7,9],[-3,0,-17,8,10],[26,0,-16,9,11]].forEach(([x,y,z,r,h])=>{const m=new THREE.Mesh(new THREE.ConeGeometry(r,h,6),mountainMat);m.position.set(x,h/2-.1,z);world.add(m); if(h>10){const s=new THREE.Mesh(new THREE.ConeGeometry(r*.34,h*.28,6),snowMat);s.position.set(x,h*.84,z);world.add(s)}});
+  const flatMat = new THREE.MeshStandardMaterial({color:0x28453b,flatShading:true});
+  [[-17,0,10,5,1.2,4],[-5,0,11,8,1.3,5],[7,0,-4,6,1,5],[20,0,14,7,1.1,5]].forEach(([x,y,z,sx,sy,sz])=>{const p=new THREE.Mesh(new THREE.BoxGeometry(2,1,2),flatMat);p.position.set(x,.55,z);p.scale.set(sx,sy,sz);world.add(p)});
+  // 树木群：圆锥体树冠和短圆柱树干组成低多边形森林，随机但固定种子便于复现。
+  const treeGroup=new THREE.Group(); world.add(treeGroup); const trunkMat=new THREE.MeshStandardMaterial({color:0x674833,flatShading:true}); const leafMats=[new THREE.MeshStandardMaterial({color:0x3c765e,flatShading:true}),new THREE.MeshStandardMaterial({color:0x5f8d5d,flatShading:true}),new THREE.MeshStandardMaterial({color:0x789658,flatShading:true})];
+  let seed=17;const rand=()=>{seed=(seed*9301+49297)%233280;return seed/233280};
+  for(let i=0;i<74;i++){const x=-23+rand()*45,z=-11+rand()*28;if(Math.abs(x)<5&&z>1&&z<10)continue;const h=.7+rand()*1.6;const trunk=new THREE.Mesh(new THREE.CylinderGeometry(.07,.1,h*.42,5),trunkMat);trunk.position.set(x,h*.21-.02,z);const crown=new THREE.Mesh(new THREE.ConeGeometry(.42+rand()*.3,h*.75,5),leafMats[i%leafMats.length]);crown.position.set(x,h*.68,z);treeGroup.add(trunk,crown)}
+  // 城镇：小型立方体组，中央高亮建筑即省丹中站点。
+  const town = new THREE.Group(); world.add(town); const buildingMat=new THREE.MeshStandardMaterial({color:0x86969a,flatShading:true});
+  [[-1,0,4,1.8,1.2],[1.7,0,3,1.2,1.8],[3.7,0,5.2,1.5,1.1],[.4,0,7,1.3,1.5],[-3,0,6.6,1.2,1.4]].forEach(([x,y,z,w,h])=>{const b=new THREE.Mesh(new THREE.BoxGeometry(w,h,w),buildingMat);b.position.set(x,h/2,z);town.add(b)});
+  const roofMat=new THREE.MeshStandardMaterial({color:0x4f6870,flatShading:true}); const windowMat=new THREE.MeshBasicMaterial({color:0xffd88c});
+  [[-1,4,1.8,1.2],[1.7,3,1.2,1.8],[3.7,5.2,1.5,1.1],[.4,7,1.3,1.5],[-3,6.6,1.2,1.4]].forEach(([x,z,w,h])=>{const roof=new THREE.Mesh(new THREE.ConeGeometry(Math.max(w,h)*.62,Math.max(w,h)*.32,4),roofMat);roof.rotation.y=Math.PI/4;roof.position.set(x,Math.max(w,h)+.15,z);town.add(roof);const glow=new THREE.Mesh(new THREE.BoxGeometry(.12,.18,.04),windowMat);glow.position.set(x-w*.22,Math.max(w,h)*.58,z-w*.52);town.add(glow)});
+  const station = new THREE.Group(); world.add(station); const stationMat=new THREE.MeshStandardMaterial({color:0xffe48a,emissive:0x704b15,emissiveIntensity:1.4}); const pin=new THREE.Mesh(new THREE.ConeGeometry(.35,1.15,5),stationMat);pin.position.y=1.8;station.add(pin); const stationBase=new THREE.Mesh(new THREE.CylinderGeometry(.24,.24,.15,8),stationMat);stationBase.position.y=1.18;station.add(stationBase); station.position.set(0,0,5);
+
+  // Canvas 贴图标签，避免依赖额外 CSS3D 渲染器。
+  function label(text,color){ const c=document.createElement('canvas'); c.width=256;c.height=64;const x=c.getContext('2d');x.font='600 25px Microsoft YaHei, sans-serif';x.fillStyle=color;x.fillText(text,8,39);const s=new THREE.Sprite(new THREE.SpriteMaterial({map:new THREE.CanvasTexture(c),transparent:true,depthTest:false}));s.scale.set(5.8,1.45,1); return s; }
+  const warmLabel=label('暖气团','#ffbf84');warmLabel.position.set(17,8,1);world.add(warmLabel); const coldLabel=label('冷气团','#8deaf3');coldLabel.position.set(-17,8,1);world.add(coldLabel); const frontLabel=label('冷锋','#f4e1b0');frontLabel.position.set(0,7,1);world.add(frontLabel); const rainLabel=label('雨区','#c4e9ff');rainLabel.position.set(1,10,3);world.add(rainLabel); const stationLabel=label('省丹中','#ffe89b');stationLabel.scale.set(4.4,1.1,1);stationLabel.position.set(0,4,5);world.add(stationLabel);
+
+  // 主题模型工具：线条、箭头和标签都使用简化几何体，便于课堂投影辨识。
+  let themeDynamic=[];
+  function clearTheme(){themeGroup.clear();themeDynamic=[]}
+  function themeLabel(text,color,pos,scale=5.2){const s=label(text,color);s.scale.set(scale,scale*.25,1);s.position.set(...pos);themeGroup.add(s);return s}
+  function themeArrow(dir,pos,color=0x71d6e5,len=4){const a=new THREE.ArrowHelper(new THREE.Vector3(...dir).normalize(),new THREE.Vector3(...pos),len,color,.7,.34);a.line.material.transparent=true;a.line.material.opacity=.75;a.cone.material.transparent=true;a.cone.material.opacity=.88;themeGroup.add(a);themeDynamic.push(a);return a}
+  function themeTube(points,color,opacity=.75){const curve=new THREE.CatmullRomCurve3(points.map(p=>new THREE.Vector3(...p)));const geo=new THREE.TubeGeometry(curve,32,.055,5,false);const mesh=new THREE.Mesh(geo,new THREE.MeshBasicMaterial({color,transparent:true,opacity}));themeGroup.add(mesh);return mesh}
+  function themePad(pos,size,color,opacity=.58){const mesh=new THREE.Mesh(new THREE.BoxGeometry(...size),new THREE.MeshStandardMaterial({color,transparent:true,opacity,flatShading:true}));mesh.position.set(...pos);themeGroup.add(mesh);return mesh}
+  function buildTheme(theme){
+    clearTheme();
+    state.theme=theme;
+    frontRibbon.visible=(theme==='cold'||theme==='warm');
+    const info=themeInfo[theme];
+    // 共同保留站点标记；其它主题将用自己的标签和流线表达过程。
+    station.visible=true; stationLabel.visible=true;
+    if(theme==='cold'){
+      frontPlane.visible=true; warmMass.visible=true; coldMass.visible=true; warmLabel.visible=true; coldLabel.visible=true; frontLabel.visible=true; rainLabel.visible=true;
+      state.mode='cold'; $('coldBtn').classList.add('active'); $('warmBtn').classList.remove('active'); $('modeSwitch').style.display='flex';
+      themeLabel('锋面抬升区','#f8e4b0',[0,10,2],5.5);
+    } else if(theme==='warm'){
+      frontPlane.visible=true; warmMass.visible=true; coldMass.visible=true; warmLabel.visible=true; coldLabel.visible=true; frontLabel.visible=true; rainLabel.visible=true;
+      state.mode='warm'; $('coldBtn').classList.remove('active'); $('warmBtn').classList.add('active'); $('modeSwitch').style.display='flex';
+    } else {
+      frontPlane.visible=false; warmMass.visible=false; coldMass.visible=false; warmLabel.visible=false; coldLabel.visible=false; frontLabel.visible=false; rainLabel.visible=false; $('modeSwitch').style.display='none';
+      // 准静止锋：用横向云带和相向箭头表现冷暖气流对峙。
+      if(theme==='stationary'){
+        themePad([0,4,1],[2,8,25],0x5a7590,.16); themeLabel('持续阴雨云带','#bfe9f0',[0,12,1],6); themeLabel('冷气流','#8eddec',[-14,7,0],4.5); themeLabel('暖气流','#ffc08d',[14,7,0],4.5);
+        for(let i=0;i<5;i++){themeArrow([1,0,0],[-19+i*4,7,-9+i*4],0x6dd7eb,3.3);themeArrow([-1,0,0],[19-i*4,6,-4+i*3],0xffad76,3.1)}
+      }
+      // 锋面气旋：低压中心配合环状箭头，暖锋、冷锋向外延伸。
+      if(theme==='cyclone'){
+        themeLabel('低压中心','#f8e3a4',[0,8,0],5); themeLabel('暖锋','#ffb07b',[9,7,0],4); themeLabel('冷锋','#82ddea',[-10,7,0],4);
+        themeTube([[0,5,0],[5,5,0],[10,5,2],[16,5,5]],0xffa36e);themeTube([[0,5,0],[-5,5,0],[-11,5,-3],[-17,5,-7]],0x6cd6e5);
+        for(let i=0;i<8;i++){const a=i*Math.PI/4;themeArrow([-Math.sin(a),0,Math.cos(a)],[Math.cos(a)*10,4,Math.sin(a)*10],i<4?0x72dbe8:0xffad79,2.7)}
+        const low=new THREE.Mesh(new THREE.CylinderGeometry(2.2,.4,.2,16),new THREE.MeshBasicMaterial({color:0x89d9e6,transparent:true,opacity:.28}));low.position.set(0,.4,0);themeGroup.add(low);
+      }
+      // 热力环流：左右两块冷热地表，加上上升、下沉和水平回流箭头。
+      if(theme==='thermal'){
+        themePad([-10,.7,0],[12,1,18],0xb35e3d,.65);themePad([10,.7,0],[12,1,18],0x347f9e,.55);themeLabel('受热陆地','#ffbf85',[-10,7,0],5);themeLabel('冷却地面','#8ddce9',[10,7,0],5);themeLabel('上升气流','#ffcf8d',[-10,13,0],4.2);themeLabel('下沉气流','#9adfe8',[10,13,0],4.2);themeArrow([0,1,0],[-10,1,0],0xffa66f,8);themeArrow([0,-1,0],[10,10,0],0x70d4e1,8);themeArrow([1,0,0],[0,10,0],0xffbc7b,10);themeArrow([-1,0,0],[0,1,0],0x7ad9e2,10);
+      }
+      // 海陆风：蓝色海面和绿色陆地分区，箭头表示昼间海风。
+      if(theme==='seaLand'){
+        themePad([-9,.7,0],[17,1,22],0x2c7b91,.75);themePad([10,.7,0],[17,1,22],0x6a7d4c,.75);themeLabel('海洋','#83d9e7',[-10,7,0],5);themeLabel('陆地','#d7c87f',[10,7,0],5);themeLabel('白天：海风 →','#9fe9ee',[0,10,0],4.8);themeArrow([1,0,0],[-18,5,0],0x75dce9,11);themeArrow([0,1,0],[10,1,0],0xffc381,7);
+      }
+      // 山谷风：用折线山脊和谷地标签，沿坡向上的箭头表达谷风。
+      if(theme==='valley'){
+        themeTube([[-22,1,5],[-11,9,0],[0,1,0],[11,9,0],[22,1,5]],0x476c6a,.95);themeLabel('山地','#a5c8bd',[-15,11,0],4.5);themeLabel('谷地','#d7c982',[0,4,5],4.5);themeLabel('白天：谷风上山','#ffc68e',[0,13,0],5);themeArrow([0,1,0],[-10,2,0],0xffb078,7);themeArrow([0,1,0],[10,2,0],0xffb078,7);themeArrow([0,0,1],[0,5,8],0x84dce8,7);
+      }
+      // 水循环：海洋蒸发、云中凝结、降水和地表径流组成闭合过程。
+      if(theme==='waterCycle'){
+        themePad([13,.3,5],[20,.25,15],0x21627c,.85);themeLabel('海洋','#8edfea',[13,5,5],5);themeLabel('蒸发 ↑','#b4edf0',[8,12,2],4.5);themeLabel('凝结云','#e7f4ef',[0,15,0],4.5);themeLabel('降水 ↓','#b7e5ff',[0,10,5],4.5);themeLabel('地表径流 →','#9edbe4',[-5,2,8],4.2);themeArrow([0,1,0],[10,1,5],0x8fe5e6,9);themeArrow([0,1,0],[14,1,5],0x8fe5e6,9);themeArrow([0,-1,0],[0,14,2],0xb8eaff,8);themeArrow([-1,0,1],[5,1,8],0x83dce4,8);
+      }
+      // 三圈环流：低纬、中纬、高纬三个简化闭合环流圈并列展示。
+      if(theme==='threeCells'){
+        themeLabel('低纬环流','#ffc27f',[-15,11,0],4.8);themeLabel('中纬环流','#91deea',[0,11,0],4.8);themeLabel('高纬环流','#b8d7ff',[15,11,0],4.8);themeLabel('低压带','#f1c37c',[-15,3,3],4);themeLabel('高压带','#a9e4ea',[0,3,3],4);
+        themeTube([[-21,2,0],[-15,10,0],[-9,2,0],[-21,2,0]],0xffa86e);themeTube([[-7,2,0],[0,8,0],[7,2,0],[-7,2,0]],0x76d6e3);themeTube([[11,2,0],[16,7,0],[21,2,0],[11,2,0]],0xa9c9f2);
+        [-15,0,15].forEach((x,i)=>{themeArrow([0,1,0],[x,2,0],i===0?0xffae73:0x77dce6,5);themeArrow([0,-1,0],[x,10,0],i===2?0xb4cff4:0xffb37a,5)});
+      }
+    }
+    if(theme!=='cold'&&theme!=='warm'){cloudPoints.material.opacity=theme==='waterCycle'?.65:.38;createRain()}
+  }
+
+  // 气团体积：颜色和透明度在模式切换时会互换。
+  const warmMass=new THREE.Mesh(new THREE.BoxGeometry(29,7,25),new THREE.MeshBasicMaterial({color:0xc7673e,transparent:true,opacity:.13,side:THREE.DoubleSide})); warmMass.position.set(13,4,1);world.add(warmMass);
+  const coldMass=new THREE.Mesh(new THREE.BoxGeometry(29,7,25),new THREE.MeshBasicMaterial({color:0x2186aa,transparent:true,opacity:.14,side:THREE.DoubleSide})); coldMass.position.set(-14,4,1);world.add(coldMass);
+  const frontPlane=new THREE.Mesh(new THREE.PlaneGeometry(24,8),new THREE.MeshBasicMaterial({color:0xf1d889,transparent:true,opacity:.17,side:THREE.DoubleSide})); frontPlane.rotation.y=Math.PI/2;frontPlane.position.y=4;world.add(frontPlane);
+  // 锋面边界线：用发光折线强调冷暖气团交界，方便课堂讲解锋面位置。
+  const frontRibbon=themeTube([[0,.35,-11],[0,.6,-6],[0,.38,0],[0,.7,6],[0,.45,11]],0xf4d38b,.9); themeGroup.remove(frontRibbon); world.add(frontRibbon); frontRibbon.visible=true;
+  // 半透明动态箭头组：每帧沿 x 方向微移，表达气流。
+  const arrowGroup=new THREE.Group();world.add(arrowGroup); const arrowColors={warm:0xffad72,cold:0x76ddea};
+  function buildArrows(){arrowGroup.clear();const warmDir=state.mode==='cold'?1:-1; for(let i=0;i<10;i++){const isWarm=i%2===0;const dir=isWarm?warmDir:-warmDir;const a=new THREE.ArrowHelper(new THREE.Vector3(dir,0,0),new THREE.Vector3(-20+i*4,7+(i%3)*1.4,-8+(i%5)*4),3.5,isWarm?arrowColors.warm:arrowColors.cold,.65,.32);a.line.material.transparent=true;a.line.material.opacity=.46;a.cone.material.transparent=true;a.cone.material.opacity=.56;arrowGroup.add(a)}} buildArrows();
+
+  // 粒子系统：云团为淡色点，雨滴根据湿度和不稳定度动态生成数量。
+  let cloudPoints, rainPoints; const cloudPositions=[]; for(let i=0;i<130;i++){cloudPositions.push((Math.random()-.5)*26,8+Math.random()*6,(Math.random()-.5)*19)} const cloudGeo=new THREE.BufferGeometry();cloudGeo.setAttribute('position',new THREE.Float32BufferAttribute(cloudPositions,3));cloudPoints=new THREE.Points(cloudGeo,new THREE.PointsMaterial({color:0xb9d7db,size:.48,transparent:true,opacity:.42,depthWrite:false}));world.add(cloudPoints);
+  // 立体云团：用多个低多边形二十面体叠成云底，缓慢漂移时比单纯点云更有体积感。
+  const cloudPuffs=new THREE.Group();world.add(cloudPuffs);const cloudMat=new THREE.MeshStandardMaterial({color:0xd3e7e6,transparent:true,opacity:.74,flatShading:true,roughness:1});
+  for(let i=0;i<18;i++){const puff=new THREE.Mesh(new THREE.IcosahedronGeometry(.8+Math.random()*1.25,1),cloudMat);puff.position.set(-3+(Math.random()-.5)*9,8.7+Math.random()*4,(Math.random()-.5)*8);puff.scale.y=.62;cloudPuffs.add(puff)}
+  // 雨幕条带：与降雨点叠加，便于教室远距离观察雨区边界。
+  const rainCurtain=new THREE.Group();world.add(rainCurtain);const rainMat=new THREE.MeshBasicMaterial({color:0x91d9ee,transparent:true,opacity:.23});for(let i=0;i<42;i++){const streak=new THREE.Mesh(new THREE.BoxGeometry(.035,1.2+Math.random()*1.8,.035),rainMat);streak.position.set(-4+(Math.random()-.5)*11,4+Math.random()*5,2+(Math.random()-.5)*8);rainCurtain.add(streak)}
+  function createRain(){if(rainPoints)world.remove(rainPoints); const n=Math.floor(60+state.humidity*1.35+state.instability*.8); const p=[];for(let i=0;i<n;i++){const x=(Math.random()-.5)*16+state.progress*10-4;p.push(x,1+Math.random()*10,(Math.random()-.5)*15+2)} const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(p,3));rainPoints=new THREE.Points(g,new THREE.PointsMaterial({color:0xaedcf0,size:.13,transparent:true,opacity:.75,depthWrite:false}));world.add(rainPoints)} createRain();
+
+  // 简单轨道控制：原生 pointer 事件实现拖拽旋转与滚轮缩放，适合 file:// 双击打开。
+  let yaw=.66,pitch=.58,distance=43,drag=false,lastX=0,lastY=0; canvas.addEventListener('pointerdown',e=>{drag=true;lastX=e.clientX;lastY=e.clientY;canvas.setPointerCapture(e.pointerId)});canvas.addEventListener('pointerup',()=>drag=false);canvas.addEventListener('pointermove',e=>{if(!drag)return;yaw-=(e.clientX-lastX)*.008;pitch-=(e.clientY-lastY)*.006;pitch=Math.max(.25,Math.min(1.2,pitch));lastX=e.clientX;lastY=e.clientY});canvas.addEventListener('wheel',e=>{e.preventDefault();distance=Math.max(27,Math.min(64,distance+e.deltaY*.035))},{passive:false});
+  function updateCamera(){const target=new THREE.Vector3(0,2,1);camera.position.set(Math.cos(yaw)*Math.cos(pitch)*distance,Math.sin(pitch)*distance,Math.sin(yaw)*Math.cos(pitch)*distance);camera.lookAt(target)}
+
+  // ------------------------------
+  // 3. 站点读数与曲线：参数改变时统一调用 refreshUI。
+  // ------------------------------
+  function getReadings(){const signed=state.mode==='cold'?1:-1;const frontEffect=(state.progress-.52)*state.tempDiff;const temp=20.5-signed*frontEffect-(state.mode==='cold'?state.tempDiff*.22:-state.tempDiff*.12);const pressure=1009+signed*(state.progress-.52)*8+(state.mode==='cold'?state.tempDiff*.22:-state.tempDiff*.12);const wind=state.mode==='cold'?9.3+state.speed/40*1.3:7.8+state.speed/55;return {temp,pressure,wind}}
+  function refreshUI(){ $('tempRangeValue').textContent=state.tempDiff+' ℃';$('speedRangeValue').textContent=state.speed+' km/h';$('humidityRangeValue').textContent=state.humidity+' %';$('instabilityRangeValue').textContent=state.instability+' %';const r=getReadings();$('tempValue').innerHTML=r.temp.toFixed(1)+' <small>℃</small>';$('pressureValue').innerHTML=Math.round(r.pressure)+' <small>hPa</small>';$('windValue').innerHTML=(state.mode==='cold'?'W':'S')+' <small>/ '+r.wind.toFixed(1)+' m/s</small>';$('tempSub').textContent=state.progress<.5?'锋前暖气团':state.progress>.58?'锋后冷气团':'锋面正在过境';$('pressureSub').textContent=state.mode==='cold'?'冷锋抬压过程':'暖锋缓慢抬升';$('windSub').textContent=state.mode==='cold'?'暖气团向东输送':'暖气团沿锋面爬升';$('weatherValue').textContent=state.mode==='cold'?'阵雨 · 雷电':'层云 · 小雨';$('weatherIcon').textContent=state.mode==='cold'?'☁':'☂';$('frontReadout').textContent=state.speed+' km/h';$('progressReadout').textContent=Math.round(state.progress*100)+'%';const sceneStrong=document.querySelector('.scene-title strong');const sceneDesc=document.querySelector('.scene-title small');const chapterIndex={cold:'01',stationary:'02',cyclone:'03',thermal:'04',seaLand:'05',valley:'06',waterCycle:'07',threeCells:'08',warm:'01'};if($('sceneEyebrow'))$('sceneEyebrow').textContent='主题 '+(chapterIndex[state.theme]||'01')+' · 三维演示';if(sceneStrong)sceneStrong.textContent=themeInfo[state.theme]?.title||'冷暖锋系统';if(sceneDesc)sceneDesc.textContent=themeInfo[state.theme]?.desc||'冷空气前进，暖空气抬升。';const lesson=$('lessonCard');if(lesson&&themeInfo[state.theme])lesson.innerHTML='<strong>当前课题 · '+themeInfo[state.theme].title+'</strong>'+themeInfo[state.theme].lesson.map(t=>'<p>'+t+'</p>').join('');if($('timelineRange')){$('timelineRange').value=Math.round(state.progress*100);$('timelineFill').style.width=(state.progress*100)+'%';$('timelineTime').textContent='T '+(state.progress<.5?'−':'＋')+' '+Math.abs((.52-state.progress)*6).toFixed(1)+' h'}drawChart();updateScene() }
+  function drawChart(){const c=$('chart'),rect=c.getBoundingClientRect(),dpr=Math.min(devicePixelRatio,2);c.width=rect.width*dpr;c.height=rect.height*dpr;const x=c.getContext('2d');x.scale(dpr,dpr);const w=rect.width,h=rect.height; x.clearRect(0,0,w,h);x.strokeStyle='#203942';x.lineWidth=1;for(let i=0;i<4;i++){const yy=25+i*(h-55)/3;x.beginPath();x.moveTo(34,yy);x.lineTo(w-14,yy);x.stroke()}const left=35,right=w-15,top=18,bottom=h-30;const fx=left+(right-left)*state.progress;x.setLineDash([4,5]);x.strokeStyle='#758e91';x.beginPath();x.moveTo(fx,top);x.lineTo(fx,bottom);x.stroke();x.setLineDash([]);const cold=state.mode==='cold';const td=state.tempDiff;const tempAt=t=>{const shock=Math.exp(-Math.pow((t-state.progress)/.11,2));return 22-(cold?td*.48:td*.22)*t-(cold?3.2:1.3)*shock};const pressAt=t=>{const rise=(cold?9:5)*t+(cold?3:1.5)*Math.exp(-Math.pow((t-state.progress)/.15,2));return rise};function plot(fn,color,dashed){x.beginPath();x.lineWidth=2; x.strokeStyle=color;if(dashed)x.setLineDash([6,4]);for(let i=0;i<=80;i++){const t=i/80,px=left+(right-left)*t,py=top+(bottom-top)*(1-(fn(t)+2)/30);i?x.lineTo(px,py):x.moveTo(px,py)}x.stroke();x.setLineDash([])}plot(tempAt,'#ff9d58',false);plot(pressAt,'#63d7e7',true);x.fillStyle='#8ca5a9';x.font='11px Segoe UI, Microsoft YaHei';[['开始',0],['过境',state.progress],['结束',1]].forEach(([label,t])=>{x.fillText(label,left+(right-left)*t-15,bottom+20)});x.fillStyle='#ffbf84';x.font='10px Segoe UI';x.fillText('温度 ℃',left,11);x.fillStyle='#8deaf3';x.fillText('气压趋势',right-44,11)}
+
+  function updateScene(){const direction=state.mode==='cold'?1:-1;frontPlane.position.x=(state.progress-.5)*30;frontLabel.position.x=frontPlane.position.x;rainLabel.position.x=frontPlane.position.x+1;warmMass.material.color.set(state.mode==='cold'?0xc7673e:0x9d613e);coldMass.material.color.set(state.mode==='cold'?0x2186aa:0x377c9d);buildArrows();createRain()}
+  // 将滑块事件绑定到 state，并实时刷新全部视图。
+  [['tempRange','tempDiff'],['speedRange','speed'],['humidityRange','humidity'],['instabilityRange','instability']].forEach(([id,key])=>{$(id).addEventListener('input',e=>{state[key]=+e.target.value;refreshUI()})});
+  document.querySelectorAll('.chapter[data-theme]').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('.chapter').forEach(item=>item.classList.remove('active'));btn.classList.add('active');buildTheme(btn.dataset.theme);refreshUI()}));
+  $('coldBtn').addEventListener('click',()=>{document.querySelectorAll('.chapter').forEach(item=>item.classList.remove('active'));document.querySelector('.chapter[data-theme="cold"]').classList.add('active');buildTheme('cold');refreshUI()});$('warmBtn').addEventListener('click',()=>{document.querySelectorAll('.chapter').forEach(item=>item.classList.remove('active'));buildTheme('warm');refreshUI()});
+  $('resetBtn').addEventListener('click',()=>{Object.assign(state,defaults);['tempRange','speedRange','humidityRange','instabilityRange'].forEach(id=>$(id).value=$(id).defaultValue);document.querySelectorAll('.chapter').forEach(item=>item.classList.remove('active'));document.querySelector('.chapter[data-theme="cold"]').classList.add('active');buildTheme('cold');refreshUI()});
+  // 曲线可拖动：在时间轴上移动过境进度，观察站点瞬时变化。
+  const chart=$('chart');function chartProgress(e){const r=chart.getBoundingClientRect();state.progress=Math.max(0,Math.min(1,(e.clientX-r.left-35)/(r.width-50)));refreshUI()}chart.addEventListener('pointerdown',e=>{state.draggingChart=true;chart.setPointerCapture(e.pointerId);chartProgress(e)});chart.addEventListener('pointermove',e=>{if(state.draggingChart)chartProgress(e)});chart.addEventListener('pointerup',()=>state.draggingChart=false);
+  let playing=false; $('timelineRange').addEventListener('input',e=>{state.progress=+e.target.value/100;refreshUI()}); $('playBtn').addEventListener('click',()=>{playing=!playing;$('playBtn').textContent=playing?'Ⅱ':'▶'});
+  buildTheme('cold'); refreshUI();
+  let clock=0; function animate(){requestAnimationFrame(animate);clock+=.016;if(playing){state.progress+=.0015;if(state.progress>1)state.progress=0;refreshUI()}updateCamera();if(rainPoints){const arr=rainPoints.geometry.attributes.position.array;for(let i=1;i<arr.length;i+=3){arr[i]-=(state.theme==='waterCycle'?.045:.07);if(arr[i]<.3)arr[i]=11}rainPoints.geometry.attributes.position.needsUpdate=true}cloudPoints.rotation.y=clock*.008;cloudPuffs.position.x=Math.sin(clock*.18)*.7;cloudPuffs.position.y=Math.sin(clock*.33)*.12;rainCurtain.position.x=Math.sin(clock*.6)*.35;treeGroup.rotation.z=Math.sin(clock*.18)*.002;arrowGroup.position.x=Math.sin(clock*.7)*.7;themeGroup.rotation.y=state.theme==='cyclone'?clock*.08:0;renderer.render(scene,camera)} animate();
+})();
+</script>
+</body>
+</html>
